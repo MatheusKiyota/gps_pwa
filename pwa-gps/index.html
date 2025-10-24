@@ -12,51 +12,42 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>Geolocalização - PWA</h1>
-    <p>Capturando a Localização:</p>
-    <div id="status"></div>
-    <div id="map"></div>
-  </div>
+  <section class="container">
+    <header class="cabecalho">
+      <h1 class="titulo">PWA - Geolocation</h1>
+    </header>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
-  <script>
-    var map;
-    var infoWindow;
+    <div class="conteudo">
+      <header class="cabecalhoConteudo">
+        <h2>Geolocalização</h2>
+      </header>
 
-    function initMap() {
-      infoWindow = new google.maps.InfoWindow;
-      map = new google.maps.Map(document.getElementById('map'), {
-        center: { lat: -34.397, lng: 150.644 },
-        zoom: 6
-      });
+      <div class="conteudoLocalizacao">
+        <p>
+          Latitude: <span id="latitude">0.0</span>
+        </p>
+        <p>
+          Longitude: <span id="longitude">0.0</span>
+        </p>
+        <div>
+          <button class="botao" id="localizacao">Capturar Localização</button>
+        </div>
+        
+      </div>
+      <div class="mapouter"><div class="gmap_canvas"><iframe width="564" height="564" id="gmap_canvas"
+         src="https://maps.google.com/maps?q=2880%20Broadway,%20New%20York&t=&z=19&ie=UTF8&iwloc=&output=embed" 
+         frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+         <a href="https://embedgooglemap.net/124/"></a>
+         <br><style>.mapouter{position:relative;text-align:right;height:564px;width:564px;}</style>
+         <a href="https://www.embedgooglemap.net"></a><style>.gmap_canvas 
+         {overflow:hidden;background:none!important;height:564px;width:564px;}</style></div></div>
+    </div>
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function(position) {
-          var pos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-
-          infoWindow.setPosition(pos);
-          infoWindow.setContent('Localização encontrada.');
-          infoWindow.open(map);
-          map.setCenter(pos);
-        }, function() {
-          handleLocationError(true, infoWindow, map.getCenter());
-        });
-      } else {
-        handleLocationError(false, infoWindow, map.getCenter());
-      }
-    }
-
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-      infoWindow.setPosition(pos);
-      infoWindow.setContent(browserHasGeolocation ?
-                            'Erro: O serviço de geolocalização falhou.' :
-                            'Erro: Seu navegador não suporta geolocalização.');
-      infoWindow.open(map);
-    }
-  </script>
+    <footer class="rodape">
+      Progressive Web Application - Geolocation
+    </footer>
+  </section>
+  <script src="js/main.js"></script>
 </body>
 </html>
+
