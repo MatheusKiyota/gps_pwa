@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA Geolocalização - Capturando a Localização</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="apple-touch-icon" href="img/pwa-icon-256.png" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="theme-color" content="white" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Geolocalização - PWA</h1>
+    <p>Capturando a Localização:</p>
+    <div id="status"></div>
+    <div id="map"></div>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+  <script>
+    var map;
+    var infoWindow;
+
+    function initMap() {
+      infoWindow = new google.maps.InfoWindow;
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 6
+      });
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+
+          infoWindow.setPosition(pos);
+          infoWindow.setContent('Localização encontrada.');
+          infoWindow.open(map);
+          map.setCenter(pos);
+        }, function() {
+          handleLocationError(true, infoWindow, map.getCenter());
+        });
+      } else {
+        handleLocationError(false, infoWindow, map.getCenter());
+      }
+    }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+      infoWindow.setPosition(pos);
+      infoWindow.setContent(browserHasGeolocation ?
+                            'Erro: O serviço de geolocalização falhou.' :
+                            'Erro: Seu navegador não suporta geolocalização.');
+      infoWindow.open(map);
+    }
+  </script>
+</body>
+</html>
